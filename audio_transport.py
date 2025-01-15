@@ -151,8 +151,8 @@ def interpolate(p, t, mass1=None, mass2=None, smoothing_factor=0.01):
         if (k_ceil[l] < n-1):
             # Transfers mass proportionally to nearest frequencies
             # to the right and left of displaced frequency
-            interp[k_floor[l]] = interp[k_floor[l]] + p[i, j] * (1 - v[l])
-            interp[k_ceil[l]] = interp[k_ceil[l]] + p[i, j] * v[l]
+            interp[k_floor[l]] = interp[k_floor[l]] + p[i, j] #* (1 - v[l])
+            #interp[k_ceil[l]] = interp[k_ceil[l]] + p[i, j] * v[l]
 
         elif (k_floor[l] == 0) or (k_ceil[l] == n-1):
             interp[k_floor[l]] = interp[k_floor[l]] + p[i, j]
@@ -196,6 +196,7 @@ def join_stfts(s1, s2, n_windows, algo, rho, verbose=True, correct_phase='repeat
     alpha = s1[:, -1]  # spectrum of last frame of s1
     beta = s2[:, 0]  # spectrum of first frame of s2
 
+
     # Total spectral mass of both spectra
     mass = lambda x: np.sum(np.abs(x))
     mass1 = mass(alpha)
@@ -204,6 +205,7 @@ def join_stfts(s1, s2, n_windows, algo, rho, verbose=True, correct_phase='repeat
     # Normalize the spectra to form histograms
     norm_alpha = alpha / mass1
     norm_beta = beta / mass2
+
 
 
     print("Computing optimal mapping")
@@ -322,9 +324,12 @@ def transport(x1, x2, t1, t2, t3, sr=44100, size_window=2206, correct_phase='rep
     n_windows2 = int(t2 * sr / size_window)
     n_windows3 = int(t3 * sr / size_window)
 
+
+
     # Compute stfts of input signals
     s1, S_db1, freq1 = stft(x1)
     s2, S_db2, freq2 = stft(x2)
+
 
     # Exclude some frames to avoid boundary effects
     begin = 10

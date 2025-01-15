@@ -5,6 +5,8 @@ import librosa.display
 from audio_transport import interpolate
 from generate_audio import normalize
 
+plt.rcParams.update({'font.size': 11})
+
 def plot_spectogram(data, figsize=(8,6)):
     fig, ax = plt.subplots(figsize=figsize)
     S = np.abs(data)
